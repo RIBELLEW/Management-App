@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import Input from "./Input.jsx";
 import Modal from "./Modal.jsx";
-export default function NewProject({ onAdd, onCancel }) {
+export default function NewProject({ onAdd, onCancelClick }) {
   const modal = useRef();
 
   const titleR = useRef();
@@ -31,9 +31,11 @@ export default function NewProject({ onAdd, onCancel }) {
   return (
     <>
       <Modal ref={modal} buttonCaption="Okay">
-        <h2>Invalid input</h2>
-        <p>Oops... looks like you forgot to enter a value.</p>
-        <p>
+        <h2 className="text-xl font-bold text-stone-700 my-4">Invalid input</h2>
+        <p className="text-stone-600 mb-1">
+          Oops... looks like you forgot to enter a value.
+        </p>
+        <p className="text-stone-600 mb-6">
           Please make sure you provided a valid value for every input field.
         </p>
       </Modal>
@@ -42,7 +44,7 @@ export default function NewProject({ onAdd, onCancel }) {
           <li>
             <button
               className="rounded-md px-4 py-2 text-stone-700 hover:text-stone-950 hover:bg-stone-100"
-              onClick={onCancel}
+              onClick={onCancelClick}
             >
               Cancel
             </button>

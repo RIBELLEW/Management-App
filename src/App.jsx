@@ -1,5 +1,6 @@
 import NewProject from "./components/NewProject";
 import ProjectSidebar from "./components/ProjectSidebar";
+import SelProjectPage from "./components/SelProjectPage";
 import StandartField from "./components/StandartField";
 import { useState } from "react";
 
@@ -7,7 +8,33 @@ function App() {
   const [projectState, setProjectState] = useState({
     selectedProjectId: undefined,
     projects: [],
+    tasks: [],
   });
+
+  function handleAddTask() {}
+
+  function handleDelTask() {}
+
+  function handleDelProject() {
+    setProjectState((prevState) => {
+      return {
+        ...prevState,
+        selectedProjectId: undefined,
+        projects: prevState.projects.filter(
+          (project) => project.id !== prevState.selectedProjectId
+        ),
+      };
+    });
+  }
+
+  function handleSelectProject(id) {
+    setProjectState((prevState) => {
+      return {
+        ...prevState,
+        selectedProjectId: id,
+      };
+    });
+  }
 
   function handleStartAddProject() {
     setProjectState((prevState) => {
@@ -41,13 +68,17 @@ function App() {
     });
   }
 
-  console.log(projectState);
+  const selectedProject = projectState.projects.find(
+    (project) => project.id === projectState.selectedProjectId
+  );
 
-  let content;
+  let content = (
+    <SelProjectPage project={selectedProject} onDelProject={handleDelProject} />
+  );
 
   if (projectState.selectedProjectId === null) {
     content = (
-      <NewProject onAdd={handleAddProject} onCancel={handleCancelAdding} />
+      <NewProject onAdd={handleAddProject} onCancelClick={handleCancelAdding} />
     );
   }
   if (projectState.selectedProjectId === undefined) {
@@ -59,6 +90,8 @@ function App() {
       <ProjectSidebar
         onStartAddProject={handleStartAddProject}
         projects={projectState.projects}
+        onSelectProject={handleSelectProject}
+        selProjectId={projectState.selectedProjectId}
       />
       {content}
     </main>
