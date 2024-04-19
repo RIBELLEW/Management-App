@@ -1,6 +1,12 @@
 import Tasks from "./Tasks.jsx";
 
-export default function SelProjectPage({ project, onDelProject }) {
+export default function SelProjectPage({
+  project,
+  onDelProject,
+  onAddTask,
+  onDelTask,
+  tasks,
+}) {
   const formattedDate = new Date(project.dueDate).toLocaleDateString("be-BY", {
     year: "numeric",
     month: "long",
@@ -26,7 +32,7 @@ export default function SelProjectPage({ project, onDelProject }) {
           {project.description}
         </p>
       </header>
-      <Tasks />
+      <Tasks onAdd={onAddTask} onDel={onDelTask} tasks={tasks} />
     </div>
   );
 }

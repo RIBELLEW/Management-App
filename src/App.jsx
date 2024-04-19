@@ -11,9 +11,29 @@ function App() {
     tasks: [],
   });
 
-  function handleAddTask() {}
+  function handleAddTask(text) {
+    setProjectState((prevState) => {
+      const taskId = Math.random();
+      const newTask = {
+        text: text,
+        id: taskId,
+        projectId: prevState.selectedProjectId,
+      };
+      return {
+        ...prevState,
+        tasks: [newTask, ...prevState.tasks],
+      };
+    });
+  }
 
-  function handleDelTask() {}
+  function handleDelTask(id) {
+    setProjectState((prevState) => {
+      return {
+        ...prevState,
+        tasks: prevState.tasks.filter((task) => task.id !== id),
+      };
+    });
+  }
 
   function handleDelProject() {
     setProjectState((prevState) => {
@@ -73,7 +93,13 @@ function App() {
   );
 
   let content = (
-    <SelProjectPage project={selectedProject} onDelProject={handleDelProject} />
+    <SelProjectPage
+      project={selectedProject}
+      onDelProject={handleDelProject}
+      onAddTask={handleAddTask}
+      onDelTask={handleDelTask}
+      tasks={projectState.tasks}
+    />
   );
 
   if (projectState.selectedProjectId === null) {
